@@ -15,7 +15,7 @@ export default function Login() {
 
   // Redirect if already logged in
   if (user) {
-    router.push('/profile');
+    router.push('/');
     return null;
   }
 
@@ -26,7 +26,7 @@ export default function Login() {
 
     try {
       await login(email, password);
-      router.push('/profile');
+      router.push('/');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Login failed');
     } finally {
@@ -93,8 +93,9 @@ export default function Login() {
           </div>
 
           <div className="text-center">
+            Don't have an account?
             <Link href="/register" className="text-blue-600 hover:text-blue-500">
-              Don't have an account? Register here
+               Register here
             </Link>
           </div>
         </form>
