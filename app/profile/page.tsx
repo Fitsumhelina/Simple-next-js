@@ -16,11 +16,11 @@ export default function Profile() {
   }, [user, loading, router]);
 
   useEffect(() => {
-    // Refresh user data when component mounts
+    // Refresh user data when user changes
     if (user) {
       refreshUser();
     }
-  }, []);
+  }, [user]);
 
   const handleLogout = async () => {
     try {

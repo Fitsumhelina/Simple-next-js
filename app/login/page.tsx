@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/AuthContext';
 import Link from 'next/link';
+import { useEffect } from 'react';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -14,8 +15,14 @@ export default function Login() {
   const router = useRouter();
 
   // Redirect if already logged in
+
+  useEffect(() => {
+    if (user) {
+      router.push('/profile');
+    }
+  }, [user, router]);
+
   if (user) {
-    router.push('/profile');
     return null;
   }
 

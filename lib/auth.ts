@@ -26,6 +26,7 @@ export const authService = {
       const user = await this.getUser();
       return user;
     } catch (error) {
+      // If token is missing or invalid, return null
       return null;
     }
   }
