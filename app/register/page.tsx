@@ -17,7 +17,6 @@ export default function Register() {
   const { register, user } = useAuth();
   const router = useRouter();
 
-  // Redirect if already logged in
   useEffect(() => {
     if (user) {
       router.push('/profile');

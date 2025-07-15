@@ -20,8 +20,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    checkAuth();
+    const storedUser = localStorage.getItem('auth_user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+      setLoading(false); 
+    } else {
+      checkAuth();
+    }
   }, []);
+
   useEffect(() => {
     if (user) {
       localStorage.setItem('auth_user', JSON.stringify(user));
@@ -29,6 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.removeItem('auth_user');
     }
   }, [user]);
+
   const checkAuth = async () => {
     try {
       const user = await authService.checkAuth();
@@ -43,6 +51,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (email: string, password: string) => {
     const response = await authService.login({ email, password });
     setUser(response.user);
+    localStorage.setItem('auth_user', JSON.stringify(response.user));
   };
 
   const register = async (name: string, email: string, password: string, passwordConfirmation: string) => {
@@ -53,11 +62,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       password_confirmation: passwordConfirmation 
     });
     setUser(response.user);
+    localStorage.setItem('auth_user', JSON.stringify(response.user));
   };
 
   const logout = async () => {
     await authService.logout();
     setUser(null);
+    localStorage.removeItem('auth_user');
   };
 
   const refreshUser = async () => {

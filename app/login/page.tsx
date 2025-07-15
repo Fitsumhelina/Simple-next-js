@@ -14,8 +14,6 @@ export default function Login() {
   const { login, user } = useAuth();
   const router = useRouter();
 
-  // Redirect if already logged in
-
   useEffect(() => {
     if (user) {
       router.push('/profile');
@@ -35,7 +33,11 @@ export default function Login() {
       await login(email, password);
       router.push('/profile');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Login failed');
+      const errorMessage =
+        err?.response?.data?.message ||
+        err?.message ||
+        'Login failed';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
