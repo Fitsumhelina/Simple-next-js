@@ -15,7 +15,7 @@ export default function Login() {
 
   // Redirect if already logged in
   if (user) {
-    router.push('/');
+    router.push('/profile');
     return null;
   }
 
@@ -26,7 +26,7 @@ export default function Login() {
 
     try {
       await login(email, password);
-      router.push('/');
+      router.push('/profile');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Login failed');
     } finally {

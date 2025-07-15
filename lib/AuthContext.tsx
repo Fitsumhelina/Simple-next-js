@@ -22,7 +22,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     checkAuth();
   }, []);
-
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('auth_user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('auth_user');
+    }
+  }, [user]);
   const checkAuth = async () => {
     try {
       const user = await authService.checkAuth();
